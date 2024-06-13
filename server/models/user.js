@@ -61,7 +61,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    phoneNumber: DataTypes.STRING,
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Phone Number is required"
+        },
+        notEmpty: {
+          msg: "Phone Number is required"
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,

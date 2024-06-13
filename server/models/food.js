@@ -79,9 +79,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Food',
   });
-  Food.beforeCreate((data, option) => {
-    data.price = Math.ceil(Math.random() * 10) * 10000;
-    
-  })
   return Food;
 };

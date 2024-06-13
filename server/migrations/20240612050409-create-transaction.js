@@ -16,13 +16,6 @@ module.exports = {
           key: "id"
         }
       },
-      CartId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Carts",
-          key: "id"
-        }
-      },
       totalAmount: {
         type: Sequelize.INTEGER
       },

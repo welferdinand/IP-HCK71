@@ -27,13 +27,23 @@ class CartController {
             let food = await Food.findByPk(foodId)
             if(!food) throw {name: "NotFound"}
 
-            let data = await Cart.create({
-                UserId: id,
-                FoodId: foodId,
-                quantity: 1
-            })
+            let cart = await Cart.findOne({where: {UserId: id, FoodId: food.id}})
+            if(cart){
+              let data = await cart.update({
+                quantity: cart.quantity + 1
+              })
 
-            res.status(201).json(data)
+              res.status(200).json(data)
+            }else {
+              let data = await Cart.create({
+                  UserId: id,
+                  FoodId: foodId,
+                  quantity: 1,
+                  status: false
+              })
+  
+              res.status(201).json(data)
+            }
         } catch (error) {
             next(error)
         }
@@ -65,6 +75,22 @@ class CartController {
           res
             .status(200)
             .json({ message: `Item Quantity is updated to ${req.body.quantity}` });
+        } catch (error) {
+          next(error);
+        }
+    }
+
+    static async editCartStatusById(req, res, next) {
+        try {
+          const cartId = req.params.id;
+          const cart = await Cart.findByPk(cartId);
+          if (!cart) throw { name: "NotFound" };
+          await cart.update({
+            status: true
+          });
+          res
+            .status(200)
+            .json({ message: `Item Status is updated` });
         } catch (error) {
           next(error);
         }

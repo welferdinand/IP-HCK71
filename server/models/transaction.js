@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Transaction.belongsTo(models.Cart, {foreignKey: "CartId"})
       Transaction.belongsTo(models.User, {foreignKey: "UserId"})
     }
   }
@@ -25,18 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "UserId is required"
-        }
-      }
-    },
-    CartId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "CartId is required"
-        },
-        notEmpty: {
-          msg: "CartId is required"
         }
       }
     },
