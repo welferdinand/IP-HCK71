@@ -52,7 +52,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Quantity is required"
         }
       }
-    }
+    },
+    status: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Cart',

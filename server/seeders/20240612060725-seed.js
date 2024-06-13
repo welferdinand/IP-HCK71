@@ -28,11 +28,14 @@ module.exports = {
       delete el.id
       el.createdAt = el.updatedAt = new Date()
       el.price = Math.ceil(Math.random() * 10) * 10000;
+      let categoryNumber = Math.ceil(Math.random() * 2)
+      if(categoryNumber === 1) el.category = "halal"
+      if(categoryNumber === 2) el.category = "haram"
 
       return el
     })
 
-    await queryInterface.bulkInsert("Foods", data, {})
+    await queryInterface.bulkInsert("Food", data, {})
   },
 
   async down (queryInterface, Sequelize) {
@@ -42,6 +45,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("Foods", null, {})
+    await queryInterface.bulkDelete("Food", null, {})
   }
 };

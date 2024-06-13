@@ -19,12 +19,15 @@ module.exports = {
       FoodId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Foods",
+          model: "Food",
           key: "id"
         }
       },
       quantity: {
         type: Sequelize.INTEGER
+      },
+      status: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
