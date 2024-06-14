@@ -39,7 +39,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    paymentStatus: DataTypes.BOOLEAN
+    paymentStatus: DataTypes.BOOLEAN,
+    orderId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Transaction',
