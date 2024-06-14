@@ -134,7 +134,12 @@ export default function Homepage() {
                         <h4 className="mt-2 text-lg font-medium text-gray-700">
                           {food.title}
                         </h4>
-                        <p className="text-blue-500">Rp. {food.price}</p>
+                        <p className="text-blue-500">
+                          {new Intl.NumberFormat("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(food.price)}
+                        </p>
                         <button
                           onClick={() => handleAddCart(food.id)}
                           className="flex items-end justify-center w-full px-2 py-2 mt-auto font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"

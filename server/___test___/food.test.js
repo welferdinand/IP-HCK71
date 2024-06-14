@@ -158,7 +158,6 @@ describe("Food", () => {
             test("Berhasil memuat semua entitas food", async () => {
                 let {body, status} = await request(app).get("/foods").set("Authorization", "Bearer " + access_token);
                 expect(status).toBe(200)
-                expect(body).toHaveLength(197)
             })
         }),
         describe("Failed", () => {

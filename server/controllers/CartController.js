@@ -8,7 +8,8 @@ class CartController {
                 include: Food,
                 where: 
                 {
-                    UserId: id
+                    UserId: id,
+                    status: false
                 }
                 
             })

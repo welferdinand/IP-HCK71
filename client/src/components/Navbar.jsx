@@ -46,12 +46,6 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <a
-                  className="inline-block no-underline hover:text-white  font-medium text-lg py-2 px-4 lg:-ml-2"
-                  href="#"
-                >
-                  Admin Only
-                </a>
               </li>
             </ul>
           </nav>

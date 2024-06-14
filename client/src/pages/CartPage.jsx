@@ -46,10 +46,51 @@ export default function CartPage() {
     fetchData();
   }, []);
 
+  async function handlePaid(){
+    try {
+      const { data } = await axios({
+          method: "POST",
+          url: `http://localhost:3000/transactions/generate-token`,
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+      })
+       console.log(data);
+      window.snap.pay(data.midtransToken.token, {
+          onSuccess: async function (result) {
+              alert("payment success!"); console.log(result);
+              await axios({
+                  method: "PATCH",
+                  url: `http://localhost:3000/transactions/payment`,
+                  data: {
+                      orderId: data.orderId
+                  },
+                  headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`
+                  }
+              })
+
+              navigate("/")
+          },
+          onPending: function (result) {
+              alert("wating your payment!"); console.log(result);
+          },
+          onError: function (result) {
+              alert("payment failed!"); console.log(result);
+          },
+          onClose: function () {
+              alert('you closed the popup without finishing the payment');
+          }
+      })
+  } catch (error) {
+      console.error(error);
+  }
+  }
+
   return (
     <>
       <Navbar />
-      <div className=" bg-gray-100 pt-20">
+      <div className="h-screen bg-gray-100 pt-20">
         <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
         <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
           <div className="rounded-lg md:w-2/3">
@@ -78,7 +119,10 @@ export default function CartPage() {
                           </h1>
                         </div>
                         <div className="flex items-center space-x-4">
-                          <p className="text-sm">Rp. {el.Food.price}</p>
+                          <p className="text-sm">{new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(el.Food.price)}</p>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -132,7 +176,7 @@ export default function CartPage() {
                 <p className="text-sm text-gray-700">including VAT</p>
               </div>
             </div>
-            <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+            <button onClick={handlePaid} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
               Check out
             </button>
           </div>
